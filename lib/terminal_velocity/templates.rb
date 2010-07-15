@@ -19,7 +19,7 @@ module TerminalVelocity
       end
 
       def options
-        @options ||= { :term_theme => "Pro", :current_window => false}
+        @options ||= { :term_theme => "Pro", :current_window => false }
       end
 
       private
@@ -72,8 +72,12 @@ module TerminalVelocity
     end
 
     class Screen < Runner
+      def self.run(username, hostnames, options = { })
+        super(username, hostnames, { :script_name => "terminal-velocity-#{$$}" }.merge(options))
+      end
+
       def launcher_script
-        "screen -S terminal-velocity-#{script_sha1} -c"
+        "screen -S #{options[:script_name]} -c"
       end
 
       def template
@@ -82,4 +86,3 @@ module TerminalVelocity
     end
   end
 end
-

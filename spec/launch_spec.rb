@@ -10,6 +10,6 @@ describe "login to #{hosts.inspect}" do
   end
 
   it "logs you into your instances via screen" do
-    TerminalVelocity::Templates::Screen.run(user, hosts)
+    TerminalVelocity::Templates::Screen.run(user, hosts, {:script_name => 'www.atmos.org'})
   end
 end
