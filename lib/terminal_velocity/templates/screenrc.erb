@@ -1,0 +1,8 @@
+<%= File.read("#{ENV["HOME"]}/.screenrc") if File.exists?("#{ENV["HOME"]}/.screenrc") %>
+
+defscrollback 1024
+
+<% @users_at_hostnames.each do |user_at_hostname| %>
+  screen -t '<%= user_at_hostname %>' 0
+  stuff "<%= user_at_hostname %>\015"
+<% end %>
