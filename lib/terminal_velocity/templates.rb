@@ -1,9 +1,12 @@
 module TerminalVelocity
   module Templates
     class Runner
-      def self.run(username, hostnames)
+      def self.run(username, hostnames, custom_options = { })
         users_at_hostnames = hostnames.map { |hostname| "#{username}@#{hostname}" }
-        new(users_at_hostnames).run
+
+        runner = new(users_at_hostnames)
+        runner.options.merge!(custom_options)
+        runner.run
       end
 
       def initialize(users_at_hostnames)
@@ -13,6 +16,10 @@ module TerminalVelocity
       def run
         generate_script
         launch
+      end
+
+      def options
+        @options ||= { :term_theme => "Pro", :current_window => false}
       end
 
       private
@@ -27,7 +34,14 @@ module TerminalVelocity
         end
 
         def launch
-          %x{#{launcher_script} "#{script_filename}" 2>/dev/null}
+          results = `#{launcher_script} "#{script_filename}" 2>&1`
+          if $?.to_i != 0
+            case results
+              when /Can’t get window 1 whose frontmost = true. Invalid index/
+                $stderr.puts("You need to 'Enable access for assistive devices.'")
+              else
+            end
+          end
         end
 
         def script_filename

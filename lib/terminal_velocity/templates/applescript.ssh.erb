@@ -38,9 +38,14 @@ tell application "Terminal"
   activate
 
   -- make a new window with the execution of a trivial command
+  <% if options[:current_window] %>
+  set tabOffset to 1
+  set windowOffset to 0
+  <% else %>
   set tabOffset to 0
   set windowOffset to 1
-  my do_submenu("Terminal", "Shell", "New Window", "Pro")
+  my do_submenu("Terminal", "Shell", "New Window", "<%= options[:term_theme] %>")
+  <% end %>
 
   -- load up the window id of the window we just created
   set window_id to id of first window whose frontmost is true
@@ -48,7 +53,7 @@ tell application "Terminal"
 
   -- make tabs 2, 3 and 4
   repeat with i from 1 to (<%= @users_at_hostnames.size %> - windowOffset)
-    my do_submenu("Terminal", "Shell", "New Tab", "Pro")
+    my do_submenu("Terminal", "Shell", "New Tab", "<%= options[:term_theme] %>")
   end repeat
 
   <% @users_at_hostnames.each_with_index do |user_at_hostname, i| %>
