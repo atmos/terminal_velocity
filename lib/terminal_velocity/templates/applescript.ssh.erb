@@ -47,13 +47,13 @@ tell application "Terminal"
   set tab_count to count of tabs of window id window_id of application "Terminal"
 
   -- make tabs 2, 3 and 4
-  repeat with i from 1 to (<%= hostnames.size %> - windowOffset)
+  repeat with i from 1 to (<%= @users_at_hostnames.size %> - windowOffset)
     my do_submenu("Terminal", "Shell", "New Tab", "Pro")
   end repeat
 
-  <% hostnames.each_with_index do |hostname, i| %>
+  <% @users_at_hostnames.each_with_index do |user_at_hostname, i| %>
   set curTab to tab (<%= i %> + tabOffset + tab_count) of window id window_id of application "Terminal"
-  set cmd to "clear; ssh -o StrictHostKeyChecking=no <%= username %>@<%= hostname %>"
+  set cmd to "clear; ssh -o StrictHostKeyChecking=no <%= user_at_hostname %>"
   do script cmd in curTab
   <% end %>
 
