@@ -19,7 +19,7 @@ Spec::Rake::SpecTask.new do |t|
 end
 
 GEM = "terminal_velocity"
-GEM_VERSION = "0.0.4"
+GEM_VERSION = "0.0.5"
 AUTHOR = "Corey Donohoe"
 EMAIL = "atmos@atmos.org"
 HOMEPAGE = "http://www.atmos.org/terminal-velocity/"
