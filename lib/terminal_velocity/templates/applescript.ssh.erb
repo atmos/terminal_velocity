@@ -53,7 +53,7 @@ tell application "Terminal"
 
   <% @users_at_hostnames.each_with_index do |user_at_hostname, i| %>
   set curTab to tab (<%= i %> + tabOffset + tab_count) of window id window_id of application "Terminal"
-  set cmd to "clear; ssh -o StrictHostKeyChecking=no <%= user_at_hostname %>"
+  set cmd to "clear; <%= ssh_command(user_at_hostname) %>"
   do script cmd in curTab
   <% end %>
 

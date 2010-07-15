@@ -1,6 +1,11 @@
 module TerminalVelocity
   module Templates
     class Runner
+      def self.run(username, hostnames)
+        users_at_hostnames = hostnames.map { |hostname| "#{username}@#{hostname}" }
+        new(users_at_hostnames).run
+      end
+
       def initialize(users_at_hostnames)
         @users_at_hostnames = users_at_hostnames
       end
@@ -11,6 +16,10 @@ module TerminalVelocity
       end
 
       private
+        def ssh_command(user_at_hostname)
+          "clear; ssh -o StrictHostKeyChecking=no #{user_at_hostname}"
+        end
+
         def generate_script
           File.open(script_filename, "w") do |fp|
             fp.write(ERB.new(File.read(template)).result(binding))

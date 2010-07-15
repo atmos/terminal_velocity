@@ -8,4 +8,8 @@ describe "login to #{hosts.inspect}" do
   it "logs you into your instances" do
     TerminalVelocity.launch(user, hosts)
   end
+
+  it "logs you into your instances via screen" do
+    TerminalVelocity::Templates::Screen.run(user, hosts)
+  end
 end

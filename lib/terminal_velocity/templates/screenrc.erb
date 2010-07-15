@@ -4,5 +4,5 @@ defscrollback 1024
 
 <% @users_at_hostnames.each do |user_at_hostname| %>
   screen -t '<%= user_at_hostname %>' 0
-  stuff "<%= user_at_hostname %>\015"
+  stuff "<%= ssh_command(user_at_hostname) %>\015"
 <% end %>
